@@ -16,6 +16,7 @@ import java.util.ArrayList;
  */
 public class SSDParser {
 
+    //具体对事实段内容的分析过程, ** 要写更多的划分方式, 主要需要写的地方
     private ArrayList<String> parseString(String str){
         ArrayList<String> res =  new ArrayList<String>();
         String[] sp = str.split("。");
@@ -25,6 +26,7 @@ public class SSDParser {
         return res;
     }
 
+    //拆解事实段
     public ArrayList<SSDModel> parseSSD(ArrayList<String> ssds){
         ArrayList<SSDModel> ssdModels = new ArrayList<SSDModel>();
         for (String ssd: ssds) {

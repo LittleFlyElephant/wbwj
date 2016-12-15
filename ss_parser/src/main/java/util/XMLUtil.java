@@ -25,6 +25,7 @@ public class XMLUtil {
     public static String readPath = "src/main/resources/in/";
     public static String outPath = "src/main/resources/out/";
 
+    //获取xml中节点
     public static ArrayList<String> getNodes(String path, String x) throws ParserConfigurationException, IOException, SAXException, XPathExpressionException {
         ArrayList<String> result = new ArrayList<String>();
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -36,7 +37,7 @@ public class XMLUtil {
         XPath xpath = factory.newXPath();
         //x是xml中的节点，例如“YGSCD”, 格式://YGSCD/@value
         XPathExpression expr = xpath.compile(x);
-        // doc中读取expr节点内容
+        //doc中读取expr节点内容
         NodeList nodes = (NodeList) expr.evaluate(doc, XPathConstants.NODESET);
         if (nodes.getLength() > 0) {
             for (int i = 0; i < nodes.getLength(); i++) {
@@ -46,6 +47,7 @@ public class XMLUtil {
         return result;
     }
 
+    //生成xml文件, 这里主要是生成划分好的事实段
     public static void buildNewSSD(ArrayList<SSDModel> ssdModels, String fileName){
         Element root = new Element("SYSSD").setAttribute("nameCN","所有事实段");
         root.setAttribute("value", "事实段出现的各个节点");

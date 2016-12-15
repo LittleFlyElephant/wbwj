@@ -14,12 +14,14 @@ import java.util.ArrayList;
  */
 public class TestUtil {
 
+    //测试分析器
     public static void testParser(String filesPath, String node) throws ParserConfigurationException, SAXException, XPathExpressionException, IOException {
         File file=new File(XMLUtil.readPath+filesPath);
         String filenames[];
         filenames = file.list();
         SSDParser parser = new SSDParser();
         int count = 0;
+        //读取子文件
         for (String filename: filenames) {
             if (filename.charAt(0) == '.') continue;
             ArrayList<String> res = XMLUtil.getNodes(XMLUtil.readPath+filesPath+"/"+filename, node);
