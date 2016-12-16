@@ -9,11 +9,29 @@ import java.util.List;
 public class SSDParserByDate extends SSDParser {
     public ArrayList<String> parseString(String str){
         ArrayList<String> res =  new ArrayList<String>();
-        String[] sp = str.split("。");
-        for (String s: sp) {
-            if (!s.equals(" ")) res.add(s+"。");
+//        String[] sp = str.split("。");
+//        for (String s: sp) {
+//            if (!s.equals(" ")) res.add(s+"。");
+//        }
+        char[] chars = str.toCharArray();
+        int j = 0;//标记一个段的开头
+        for(int i=0;i<chars.length;i++){
+            char a = chars[i];
+            if(a == '。'){
+                //看之后的字符串是否是日期,如果是则进行划分
+
+            }else{
+                //否则继续往下走
+                continue;
+            }
         }
         return res;
+    }
+    private boolean isDate(String str){
+        if(str.contains("年")){
+            return true;
+        }
+        return false;
     }
 
     public static void main(String[] args){
