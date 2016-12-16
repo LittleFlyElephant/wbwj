@@ -1,10 +1,11 @@
-import org.xml.sax.SAXException;
-import parser.SSDParser;
-import util.TestUtil;
+import java.io.IOException;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPathExpressionException;
-import java.io.IOException;
+
+import org.xml.sax.SAXException;
+
+import util.TestUtil;
 
 /**
  * Created by raychen on 2016/12/11.

@@ -7,7 +7,7 @@ import java.util.List;
  * Created by dengrong on 2016/12/15.
  */
 public class SSDParserByDate extends SSDParser {
-    protected ArrayList<String> parseString(String str){
+    public ArrayList<String> parseString(String str){
         ArrayList<String> res =  new ArrayList<String>();
         String[] sp = str.split("。");
         for (String s: sp) {
