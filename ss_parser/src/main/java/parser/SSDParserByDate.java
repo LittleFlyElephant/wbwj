@@ -15,14 +15,15 @@ public class SSDParserByDate extends SSDParser {
 //        }
         char[] chars = str.toCharArray();
         int j = 0;//标记一个段的开头
-        for(int i=0;i<chars.length;i++){
+        for(int i=0;i<chars.length-1;i++){
             char a = chars[i];
             if(a == '。'){
                 //看之后的字符串是否是日期,如果是则进行划分
+                if(isDate(str.substring(i+1,i+6))){
+                    res.add(str.substring(j,i+1));
+                    j = i+1;
+                }
 
-            }else{
-                //否则继续往下走
-                continue;
             }
         }
         return res;
