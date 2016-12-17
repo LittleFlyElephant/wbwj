@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public class SSDParser {
 
     //具体对事实段内容的分析过程, ** 要写更多的划分方式, 主要需要写的地方
-    private ArrayList<String> parseString(String str){
+    protected ArrayList<String> parseString(String str){
         ArrayList<String> res =  new ArrayList<String>();
         String[] sp = str.split("。");
         for (String s: sp) {

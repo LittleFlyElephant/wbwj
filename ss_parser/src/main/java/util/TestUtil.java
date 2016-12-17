@@ -1,5 +1,6 @@
 package util;
 
+import locator.Locator;
 import org.xml.sax.SAXException;
 import parser.SSDParser;
 
@@ -15,16 +16,17 @@ import java.util.ArrayList;
 public class TestUtil {
 
     //测试分析器
-    public static void testParser(String filesPath, String node) throws ParserConfigurationException, SAXException, XPathExpressionException, IOException {
+    public static void testParser(String filesPath) throws ParserConfigurationException, SAXException, XPathExpressionException, IOException {
         File file=new File(XMLUtil.readPath+filesPath);
         String filenames[];
         filenames = file.list();
+        Locator locator = new Locator();
         SSDParser parser = new SSDParser();
         int count = 0;
         //读取子文件
         for (String filename: filenames) {
             if (filename.charAt(0) == '.') continue;
-            ArrayList<String> res = XMLUtil.getNodes(XMLUtil.readPath+filesPath+"/"+filename, node);
+            ArrayList<String> res = locator.getSSDs(filesPath, XMLUtil.readPath+filesPath+"/"+filename);
             if (res.size() == 0) continue;
             count ++;
             XMLUtil.buildNewSSD(parser.parseSSD(res), filesPath+"/"+filename);
