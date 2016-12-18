@@ -2,6 +2,8 @@ package locator;
 
 import java.util.ArrayList;
 
+import model.SSDModel;
+
 public class CivilSecondLocator{
 
 	private static CivilSecondLocator locator = new CivilSecondLocator();
@@ -18,7 +20,7 @@ public class CivilSecondLocator{
 		patternList.add(new Pattern("本审段落","//BSDL/@value",""));
 	}
 	
-	public String getSSD(String filePath){
+	public SSDModel getSSD(String filePath){
 		MatchResult result = SSDLocator.match(patternList, filePath);
 
 		String append = "";
@@ -37,7 +39,7 @@ public class CivilSecondLocator{
 		//SSDLocator.record(result.getMatchContent(), filePath.replace("/in/", "/out/").replaceAll(".xml", ".txt"));
 		
 		
-		return result.getMatchContent();
+		return new SSDModel(result.getPatternName(),result.getMatchContent());
 	}
 	
 }

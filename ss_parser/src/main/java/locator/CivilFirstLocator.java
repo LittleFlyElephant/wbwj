@@ -2,6 +2,8 @@ package locator;
 
 import java.util.ArrayList;
 
+import model.SSDModel;
+
 public class CivilFirstLocator{
 	
 	private static CivilFirstLocator locator = new CivilFirstLocator();
@@ -18,7 +20,7 @@ public class CivilFirstLocator{
 		patternList.add(new Pattern("案件基本情况","//AJJBQK/@value",""));
 	}
 	
-	public String getSSD(String filePath){
+	public SSDModel getSSD(String filePath){
 		MatchResult result = SSDLocator.match(patternList, filePath);
 		
 		String append = "";
@@ -35,7 +37,7 @@ public class CivilFirstLocator{
 		
 		//SSDLocator.record(result.getMatchContent(), filePath.replace("/in/", "/out/").replaceAll(".xml", ".txt"));
 		
-		return result.getMatchContent();
+		return new SSDModel(result.getPatternName(),result.getMatchContent());
 	}
 
 }

@@ -2,6 +2,8 @@ package locator;
 
 import java.util.ArrayList;
 
+import model.SSDModel;
+
 public class AdministrativeSecondLocator{
 
 	private static AdministrativeSecondLocator locator = new AdministrativeSecondLocator();
@@ -18,7 +20,7 @@ public class AdministrativeSecondLocator{
 		patternList.add(new Pattern("本审段落","//BSDL/@value",""));
 	}
 	
-	public String getSSD(String filePath){
+	public SSDModel getSSD(String filePath){
 		MatchResult result = SSDLocator.match(patternList, filePath);
 
 		String append = "";
@@ -36,8 +38,23 @@ public class AdministrativeSecondLocator{
 		//if(result.getPatternName()!=null && result.getPatternName().equals("本审段落"))
 		//SSDLocator.record(result.getMatchContent(), filePath.replace("/in/", "/out/").replaceAll(".xml", ".txt"));
 		
+		//如果本审与原审事实一致则加上原审的
+		patternList.clear();
+		patternList.add(new Pattern("本院认定事实证据是否与原审一致","//BYRDSSZJSFYYSYZ/@value","是"));
+		MatchResult result2 = SSDLocator.match(patternList, filePath);
+		if(result2.getPatternName()!=null && result2.getMatchContent().contains("是")){
+			patternList.clear();
+			patternList.add(new Pattern("前审审理段","//QSSLD/@value",""));
+			patternList.add(new Pattern("前审段落","//QSDL/@value",""));
+			result = SSDLocator.match(patternList, filePath);
+			//System.out.println(filePath);
+		}
 		
-		return result.getMatchContent();
+		//SSDLocator.record(result.getMatchContent(), filePath.replace("/in/", "/out/").replaceAll(".xml", ".txt"));
+		
+		
+		
+		return new SSDModel(result.getPatternName(),result.getMatchContent());
 	}
 	
 }

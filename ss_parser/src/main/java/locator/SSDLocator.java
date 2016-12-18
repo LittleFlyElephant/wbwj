@@ -24,16 +24,16 @@ public class SSDLocator {
 	
 	public SSDModel getSSD(String filePath,String classfication){
 		if(classfication.equals("民事一审")){
-			return new SSDModel("事实段",CivilFirstLocator.getInstance().getSSD(filePath));
+			return CivilFirstLocator.getInstance().getSSD(filePath);
 		}
 		else if(classfication.equals("民事二审")){
-			return new SSDModel("事实段",CivilSecondLocator.getInstance().getSSD(filePath));
+			return CivilSecondLocator.getInstance().getSSD(filePath);
 		}
 		else if(classfication.equals("行政一审")){
-			return new SSDModel("事实段",AdministrativeFirstLocator.getInstance().getSSD(filePath));
+			return AdministrativeFirstLocator.getInstance().getSSD(filePath);
 		}
 		else if(classfication.equals("行政二审")){
-			return new SSDModel("事实段",AdministrativeSecondLocator.getInstance().getSSD(filePath));
+			return AdministrativeSecondLocator.getInstance().getSSD(filePath);
 		}
 		else{
 			System.out.println("error in SSDLocatolr.getSSD() ： unexpected classfication");

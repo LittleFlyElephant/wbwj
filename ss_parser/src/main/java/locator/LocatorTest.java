@@ -9,9 +9,9 @@ public class LocatorTest {
 	public static void main(String args[]){
 		LocatorTest test = new LocatorTest();
 //		test.testLocator("民事一审");
-//		test.testLocator("民事二审");
-		test.testLocator("行政一审");
-//		test.testLocator("行政二审");
+		test.testLocator("民事二审");
+//		test.testLocator("行政一审");
+		test.testLocator("行政二审");
 		
 	}
 	
