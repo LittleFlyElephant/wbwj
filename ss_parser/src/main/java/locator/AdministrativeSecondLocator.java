@@ -29,14 +29,12 @@ public class AdministrativeSecondLocator{
 				result.setMatchContent(factor);
 				append += "         true";
 			}
-		}else {
-			System.out.println(filePath+"   null");
 		}
 		
 //		System.out.println(filePath + "    " + result.getPatternName() + append);
 		
 		//if(result.getPatternName()!=null && result.getPatternName().equals("本审段落"))
-		SSDLocator.record(result.getMatchContent(), filePath.replace("/in/", "/out/").replaceAll(".xml", ".txt"));
+		//SSDLocator.record(result.getMatchContent(), filePath.replace("/in/", "/out/").replaceAll(".xml", ".txt"));
 		
 		
 		return result.getMatchContent();

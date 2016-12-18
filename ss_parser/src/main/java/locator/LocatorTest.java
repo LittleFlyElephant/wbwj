@@ -10,8 +10,8 @@ public class LocatorTest {
 		LocatorTest test = new LocatorTest();
 //		test.testLocator("民事一审");
 //		test.testLocator("民事二审");
-//		test.testLocator("行政一审");
-		test.testLocator("行政二审");
+		test.testLocator("行政一审");
+//		test.testLocator("行政二审");
 		
 	}
 	
@@ -25,7 +25,7 @@ public class LocatorTest {
         //读取子文件
         for (String filename: filenames) {
             if (filename.charAt(0) == '.') continue;
-			String result = locator.getSSD(XMLUtil.readPath+filesPath+"/"+filename,filesPath);
+			String result = locator.getSSD(XMLUtil.readPath+filesPath+"/"+filename,filesPath).getValue();
             //System.out.println(result);
         }
 		

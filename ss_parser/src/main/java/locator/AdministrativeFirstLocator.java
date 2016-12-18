@@ -27,13 +27,11 @@ public class AdministrativeFirstLocator{
 				result.setMatchContent(factor);
 				append += "         true";
 			}
-		}else {
-			System.out.println(filePath+"   null");
 		}
 		
 //		System.out.println(filePath + "    " + result.getPatternName() + append);
 		
-		SSDLocator.record(result.getMatchContent(), filePath.replace("/in/", "/out/").replaceAll(".xml", ".txt"));
+		//SSDLocator.record(result.getMatchContent(), filePath.replace("/in/", "/out/").replaceAll(".xml", ".txt"));
 		
 		return result.getMatchContent();
 	}
