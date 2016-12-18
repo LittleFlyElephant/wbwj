@@ -56,7 +56,7 @@ public class XMLUtil {
 
         //将拆解好的事实插入文档
         for (SSDModel ssdModel: ssdModels) {
-            Element e = new Element("SSD").setAttribute("nameCN", "事实段");
+            Element e = new Element("SSD").setAttribute("nameCN", ssdModel.getName());
             e.setAttribute("value", ssdModel.getValue());
             root.addContent(e);
             for (String s: ssdModel.getDetails()) {

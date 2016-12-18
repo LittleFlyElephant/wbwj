@@ -41,13 +41,13 @@ public class SSDParser {
     }
 
     //拆解事实段
-    public ArrayList<SSDModel> parseSSD(ArrayList<String> ssds){
+    public ArrayList<SSDModel> parseSSD(ArrayList<SSDModel> ssds){
         ArrayList<SSDModel> ssdModels = new ArrayList<SSDModel>();
-        for (String ssd: ssds) {
-            SSDModel ssdModel = new SSDModel("事实段", ssd);
+        for (SSDModel ssd: ssds) {
             //拆解过程
-            ssdModel.setDetails(parseString(ssd));
-            ssdModels.add(ssdModel);
+            if (ssd.getValue() == null) continue;
+            ssd.setDetails(parseString(ssd.getValue()));
+            ssdModels.add(ssd);
         }
         return ssdModels;
     }

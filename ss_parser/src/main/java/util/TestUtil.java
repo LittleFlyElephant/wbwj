@@ -30,13 +30,15 @@ public class TestUtil {
         for (String filename: filenames) {
             if (filename.charAt(0) == '.') continue;
             //获得事实段
-            ArrayList<String> res = locator.getSSDs(filesPath, XMLUtil.readPath+filesPath+"/"+filename);
+            ArrayList<SSDModel> res = locator.getSSDs(filesPath, XMLUtil.readPath+filesPath+"/"+filename);
             if (res.size() == 0) continue;
-            count ++;
             //分解事实段
             ArrayList<SSDModel> parseRes = parser.parseSSD(res);
             //过滤事实
             ArrayList<SSDModel> filteredRes = filter.filter(parseRes);
+            //去除null
+            if (filteredRes.size() == 0) continue;
+            count ++;
             //生成xml
             XMLUtil.buildNewSSD(filteredRes, filesPath+"/"+filename);
         }
