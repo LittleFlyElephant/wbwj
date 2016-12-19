@@ -25,9 +25,19 @@ public class BaseFilter {
     public ArrayList<SSDModel> filter(ArrayList<SSDModel> ssds){
         ArrayList<SSDModel> result = new ArrayList<SSDModel>();
 
-        for (SSDModel ss: ssds) {
-            if (checkKeywords(ss.getValue())) continue;
-            result.add(ss);
+        for (SSDModel ssd: ssds) {
+            //获得拆解的事实
+            ArrayList<String> ss = ssd.getDetails();
+            ArrayList<String> newSs = new ArrayList<String>();
+            //筛选
+            for (String str: ss) {
+                if (checkKeywords(str)) continue;
+                newSs.add(str);
+            }
+            if (newSs.size()>0){
+                ssd.setDetails(newSs);
+                result.add(ssd);
+            }
         }
 
         return result;
