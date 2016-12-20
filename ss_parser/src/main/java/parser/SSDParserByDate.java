@@ -5,6 +5,13 @@ import java.util.List;
 
 /**
  * Created by dengrong on 2016/12/15.
+ * 本周主要工作有：
+ 1、加入事实段定位的代码，不仅仅看查明事实段和前审审理段
+ 2、加入按照日期和关键字的事实段拆解方法，并测试分析
+ 3、修改原有按照句号分解的方法，去除空格并加入引号的判断
+ 4、加入拆解后的过滤器，用于去除拆解完后不属于事实的部分
+ 5、测试和统计结果
+
  */
 public class SSDParserByDate extends SSDParser {
     public ArrayList<String> parseString(String str){
