@@ -7,11 +7,21 @@ public class ExcelModel {
     private String xmlName;
     private String ssd;
     private String location;
+    private String wscc;
 
-    public ExcelModel(String xmlName, String ssd, String location) {
+    public ExcelModel(String xmlName, String ssd, String location, String wscc) {
         this.xmlName = xmlName;
         this.ssd = ssd;
         this.location = location;
+        this.wscc = wscc;
+    }
+
+    public void setWscc(String wscc) {
+        this.wscc = wscc;
+    }
+
+    public String getWscc() {
+        return wscc;
     }
 
     public void setLocation(String location) {

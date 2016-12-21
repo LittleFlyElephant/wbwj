@@ -49,23 +49,29 @@ public class TestUtil {
         System.out.println("parse: "+count+"/"+filenames.length);
     }
 
-    public static void testExcel(String filesPath) throws ParserConfigurationException, SAXException, XPathExpressionException, IOException, WriteException {
-        File newFile = new File(ExcelUtil.filePath+"test.xls");
+    public static void testExcel() throws ParserConfigurationException, SAXException, XPathExpressionException, IOException, WriteException {
+        File newFile = new File(ExcelUtil.filePath+"事实段表格.xls");
         if (!newFile.exists()) newFile.createNewFile();
         OutputStream os = new FileOutputStream(newFile);
         //读取xml
-        File file=new File(XMLUtil.readPath+filesPath);
-        String filenames[];
-        filenames = file.list();
+        File file_out=new File(XMLUtil.readPath);
+        String fileout_names[] = file_out.list();
         ArrayList<ExcelModel> models = new ArrayList<ExcelModel>();
-        for (String filename: filenames) {
-            String x = filesPath.contains("一审")?"CMSSD":"QSSLD";
-            ArrayList<String> results = XMLUtil.getNodes(XMLUtil.readPath+filesPath+"/"+filename, "//"+x+"/@value");
-            //存在事实段，插入表格
-            if (results.size() > 0){
-                for (String str: results) {
-                    ExcelModel model = new ExcelModel(filename, str, x.equals("CMSSD")?"查明事实段":"前审审理段");
-                    models.add(model);
+        for (String fileout_name: fileout_names) {
+            if (fileout_name.charAt(0) == '.') continue;
+            //内层
+            File file = new File(XMLUtil.readPath+fileout_name);
+            String filenames[] = file.list();
+            for (String filename: filenames) {
+                if (filename.charAt(0) == '.') continue;
+                String x = fileout_name.contains("一审")?"CMSSD":"QSSLD";
+                ArrayList<String> results = XMLUtil.getNodes(XMLUtil.readPath+fileout_name+"/"+filename, "//"+x+"/@value");
+                //存在事实段，插入表格
+                if (results.size() > 0){
+                    for (String str: results) {
+                        ExcelModel model = new ExcelModel(filename, str, x.equals("CMSSD")?"查明事实段":"前审审理段", fileout_name);
+                        models.add(model);
+                    }
                 }
             }
         }
