@@ -3,13 +3,13 @@ package model;
 /**
  * Created by st0001 on 2016/12/21.
  */
-public class ExcelModel {
+public class ExcelRowModel {
     private String xmlName;
     private String ssd;
     private String location;
     private String wscc;
 
-    public ExcelModel(String xmlName, String ssd, String location, String wscc) {
+    public ExcelRowModel(String xmlName, String ssd, String location, String wscc) {
         this.xmlName = xmlName;
         this.ssd = ssd;
         this.location = location;

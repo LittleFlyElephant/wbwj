@@ -3,7 +3,8 @@ package util;
 import filter.BaseFilter;
 import jxl.write.WriteException;
 import locator.Locator;
-import model.ExcelModel;
+import model.ExcelRowModel;
+import model.ExcelSheetModel;
 import model.SSDModel;
 import org.xml.sax.SAXException;
 import parser.SSDParser;
@@ -50,6 +51,7 @@ public class TestUtil {
         System.out.println("parse: "+count+"/"+filenames.length);
     }
 
+    //测试导出excel
     public static void testExcel() throws ParserConfigurationException, SAXException, XPathExpressionException, IOException, WriteException {
         File newFile = new File(ExcelUtil.filePath+"事实段表格.xls");
         if (!newFile.exists()) newFile.createNewFile();
@@ -57,9 +59,11 @@ public class TestUtil {
         //读取xml
         File file_out=new File(XMLUtil.readPath);
         String fileout_names[] = file_out.list();
-        ArrayList<ExcelModel> models = new ArrayList<ExcelModel>();
+        ArrayList<ExcelSheetModel> sheetModels = new ArrayList<ExcelSheetModel>();
+        int count = 0;
         for (String fileout_name: fileout_names) {
             if (fileout_name.charAt(0) == '.') continue;
+            ArrayList<ExcelRowModel> models = new ArrayList<ExcelRowModel>();
             //内层
             File file = new File(XMLUtil.readPath+fileout_name);
             String filenames[] = file.list();
@@ -70,12 +74,13 @@ public class TestUtil {
                 //存在事实段，插入表格
                 if (results.size() > 0){
                     for (String str: results) {
-                        ExcelModel model = new ExcelModel(filename, str, x.equals("CMSSD")?"查明事实段":"前审审理段", fileout_name);
+                        ExcelRowModel model = new ExcelRowModel(filename, str, x.equals("CMSSD")?"查明事实段":"前审审理段", fileout_name);
                         models.add(model);
                     }
                 }
             }
+            sheetModels.add(new ExcelSheetModel(models, count++, fileout_name));
         }
-        ExcelUtil.buildExcel(os, models);
+        ExcelUtil.buildExcel(os, sheetModels);
     }
 }
