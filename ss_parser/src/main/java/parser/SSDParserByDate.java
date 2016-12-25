@@ -1,5 +1,7 @@
 package parser;
 
+import model.SSDModel;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,6 +44,17 @@ public class SSDParserByDate extends SSDParser {
             return true;
         }
         return false;
+    }
+    //拆解事实段
+    public ArrayList<SSDModel> parseSSD(ArrayList<SSDModel> ssds){
+        ArrayList<SSDModel> ssdModels = new ArrayList<SSDModel>();
+        for (SSDModel ssd: ssds) {
+            //拆解过程
+            if (ssd.getValue() == null) continue;
+            ssd.setDetails(parseString(ssd.getValue()));
+            ssdModels.add(ssd);
+        }
+        return ssdModels;
     }
 
     public static void main(String[] args){
