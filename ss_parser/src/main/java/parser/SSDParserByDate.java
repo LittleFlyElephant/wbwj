@@ -26,9 +26,11 @@ public class SSDParserByDate extends SSDParser {
             char a = chars[i];
             if(a == '。'){
                 //看之后的字符串是否是日期,如果是则进行划分
-                if(isDate(str.substring(i+1,i+6))){
-                    res.add(str.substring(j,i+1));
-                    j = i+1;
+                if(i+6 <chars.length){
+                    if(isDate(str.substring(i+1,i+6))){
+                        res.add(str.substring(j,i+1));
+                        j = i+1;
+                    }
                 }
 
             }

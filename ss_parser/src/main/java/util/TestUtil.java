@@ -8,6 +8,7 @@ import model.ExcelSheetModel;
 import model.SSDModel;
 import org.xml.sax.SAXException;
 import parser.SSDParser;
+import parser.SSDParserByDate;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPathExpressionException;
@@ -28,7 +29,7 @@ public class TestUtil {
         String filenames[];
         filenames = file.list();
         Locator locator = new Locator();
-        SSDParser parser = new SSDParser();
+        SSDParser parser = new SSDParserByDate();
         BaseFilter filter = new BaseFilter();
         int count = 0;
         //读取子文件
