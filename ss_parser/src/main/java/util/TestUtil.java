@@ -25,11 +25,12 @@ public class TestUtil {
 
     //测试分析器
     public static void testParser(String filesPath) throws ParserConfigurationException, SAXException, XPathExpressionException, IOException {
+        FileUtil.delAllFile(XMLUtil.outPath+filesPath);
         File file=new File(XMLUtil.readPath+filesPath);
         String filenames[];
         filenames = file.list();
         Locator locator = new Locator();
-        SSDParser parser = new SSDParserByDate();
+        SSDParser parser = new SSDParser();
         BaseFilter filter = new BaseFilter();
         int count = 0;
         //读取子文件
