@@ -6,9 +6,11 @@ import locator.Locator;
 import model.ExcelRowModel;
 import model.ExcelSheetModel;
 import model.SSDModel;
+import model.SSModel;
 import org.xml.sax.SAXException;
 import parser.SSDParser;
 import parser.SSDParserByDate;
+import parser.SSParser;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPathExpressionException;
@@ -22,6 +24,17 @@ import java.util.ArrayList;
  * Created by raychen on 2016/12/11.
  */
 public class TestUtil {
+
+    public static void getKeyInSS(ArrayList<SSDModel> ssdModels){
+        //增加提取关键词的类
+        SSParser parserWhere = new SSParser();
+        for (SSDModel ssd: ssdModels) {
+            for (SSModel ss: ssd.getSsModels()) {
+                //设置关键词
+                parserWhere.setKeyInSS(ss);
+            }
+        }
+    }
 
     //测试分析器
     public static void testParser(String filesPath) throws ParserConfigurationException, SAXException, XPathExpressionException, IOException {
@@ -45,6 +58,8 @@ public class TestUtil {
             ArrayList<SSDModel> filteredRes = filter.filter(parseRes);
             //去除null
             if (filteredRes.size() == 0) continue;
+            //设置事实关键词
+            getKeyInSS(filteredRes);
             count ++;
             //生成xml
             XMLUtil.buildNewSSD(filteredRes, filesPath+"/"+filename);
