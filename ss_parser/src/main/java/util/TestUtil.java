@@ -8,10 +8,7 @@ import model.ExcelSheetModel;
 import model.SSDModel;
 import model.SSModel;
 import org.xml.sax.SAXException;
-import parser.SSDParser;
-import parser.SSDParserByDate;
-import parser.SSParser;
-import parser.SSWhatParser;
+import parser.*;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPathExpressionException;
@@ -28,13 +25,13 @@ public class TestUtil {
 
     public static void getKeyInSS(ArrayList<SSDModel> ssdModels){
         //增加提取关键词的类
-        SSParser parserWhere = new SSParser();
+        SSParser parserWhere = new SSWhereParser();
         SSParser parserWhat = new SSWhatParser();
         for (SSDModel ssd: ssdModels) {
             for (SSModel ss: ssd.getSsModels()) {
                 //设置关键词
                 parserWhere.setKeyInSS(ss);
-                parserWhat.setKeyInSS(ss);
+//                parserWhat.setKeyInSS(ss);
             }
         }
     }
