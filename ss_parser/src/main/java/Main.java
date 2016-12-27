@@ -13,8 +13,8 @@ import util.TestUtil;
 public class Main {
     public static void main(String[] args) throws ParserConfigurationException, SAXException, XPathExpressionException, IOException {
         TestUtil.testParser("民事一审");
-//        TestUtil.testParser("民事二审");
-//        TestUtil.testParser("行政一审");
-//        TestUtil.testParser("行政二审");
+        TestUtil.testParser("民事二审");
+        TestUtil.testParser("行政一审");
+        TestUtil.testParser("行政二审");
     }
 }

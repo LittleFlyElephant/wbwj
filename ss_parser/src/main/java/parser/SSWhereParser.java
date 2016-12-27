@@ -6,6 +6,7 @@ import org.ansj.domain.Term;
 import org.ansj.splitWord.analysis.NlpAnalysis;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -13,7 +14,7 @@ import java.util.List;
  */
 public class SSWhereParser extends SSParser {
 
-    private String[] preps = {"在","于"};
+    private ArrayList<String> preps = new ArrayList<String>(Arrays.asList("在","于","至","往","从","沿"));
 
     @Override
     protected String extractKey(String ss) {
@@ -23,9 +24,9 @@ public class SSWhereParser extends SSParser {
         int p = 0;
         while (p < originTerms.size()){
             Term term = originTerms.get(p);
-//            System.out.println(term.getName()+" "+term.getNatureStr());
+//            System.out.println(term);
             p ++;
-            if (term.getNatureStr().equals("p")){//介词
+            if (term.getNatureStr().equals("p") && preps.contains(term.getName())){//介词
                 String place = "";
                 while (p < originTerms.size()){
                     Term innerTerm = originTerms.get(p);
@@ -39,7 +40,14 @@ public class SSWhereParser extends SSParser {
                     }
                     break;
                 }
-                if (place.length() > 0) ans += term+place+";";
+                //筛选
+                if (place.length() > 0 &&
+                        !place.startsWith("本院") &&
+                        !place.startsWith("被告")&&
+                        !place.startsWith("本案")&&
+                        !place.equals("范围")&&
+                        !place.equals("界限"))
+                    ans += place+";";
             }
         }
         return ans;
@@ -48,12 +56,13 @@ public class SSWhereParser extends SSParser {
     @Override
     public void setKeyInSS(SSModel ssModel) {
         String ss = ssModel.getValue();
-        ssModel.setWhere(extractKey(ss));
+        String res = extractKey(ss);
+        if (!res.equals("")) ssModel.setWhere(res);
     }
 
     public static void main(String[] args) {
         SSWhereParser parser = new SSWhereParser();
-        String test = "2013年10月底，原告又就医于西安中医脑病医院，被诊断为外伤性震颤";
+        String test = "四至界限为：东邻旱沟，南邻覃朝良旱地，西邻杉树，北邻旱沟";
         String places = parser.extractKey(test);
         System.out.println(places);
     }
