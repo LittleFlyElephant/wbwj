@@ -1,8 +1,7 @@
 package locator;
 
-import util.XMLUtil;
+import model.SSDModel;
 
-import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -16,9 +15,9 @@ public class Locator {
         locator = SSDLocator.getInstance();
     }
 
-    public ArrayList<String> getSSDs(String fileType, String filePath){
-        ArrayList<String> ret = new ArrayList<String>();
-        String result = locator.getSSD(filePath, fileType);
+    public ArrayList<SSDModel> getSSDs(String fileType, String filePath){
+        ArrayList<SSDModel> ret = new ArrayList<SSDModel>();
+        SSDModel result = locator.getSSD(filePath, fileType);
         if (result != null) ret.add(result);
         return ret;
     }

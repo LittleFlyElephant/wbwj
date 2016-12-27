@@ -1,6 +1,7 @@
 package util;
 
 import model.SSDModel;
+import model.SSModel;
 import org.jdom.Element;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
@@ -56,13 +57,29 @@ public class XMLUtil {
 
         //将拆解好的事实插入文档
         for (SSDModel ssdModel: ssdModels) {
-            Element e = new Element("SSD").setAttribute("nameCN", "事实段");
+            Element e = new Element("SSD").setAttribute("nameCN", ssdModel.getName());
             e.setAttribute("value", ssdModel.getValue());
             root.addContent(e);
-            for (String s: ssdModel.getDetails()) {
+            for (SSModel s: ssdModel.getSsModels()) {
                 Element e2 = new Element("SS").setAttribute("nameCN", "事实");
-                e2.setAttribute("value", s);
+                e2.setAttribute("value", s.getValue());
                 e.addContent(e2);
+                //增加事实关键词提取
+                Element e31 = new Element("SSWhere").setAttribute("nameCN", "地点");
+                e31.setAttribute("value", s.getWhere());
+                e2.addContent(e31);
+                Element e32 = new Element("SSWhen").setAttribute("nameCN", "时间");
+                e32.setAttribute("value", s.getWhen());
+                e2.addContent(e32);
+                Element e33 = new Element("SSWhat").setAttribute("nameCN", "事物");
+                e33.setAttribute("value", s.getWhat());
+                e2.addContent(e33);
+                Element e34 = new Element("SSWho").setAttribute("nameCN", "人名");
+                e34.setAttribute("value", s.getWho());
+                e2.addContent(e34);
+                Element e35 = new Element("SSHowMuch").setAttribute("nameCN", "数量");
+                e35.setAttribute("value", s.getHow_much());
+                e2.addContent(e35);
             }
         }
 

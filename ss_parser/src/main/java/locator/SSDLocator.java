@@ -11,6 +11,7 @@ import javax.xml.xpath.XPathExpressionException;
 
 import org.xml.sax.SAXException;
 
+import model.SSDModel;
 import util.XMLUtil;
 
 public class SSDLocator {
@@ -21,8 +22,7 @@ public class SSDLocator {
 		return locator;
 	}
 	
-	public String getSSD(String filePath,String classfication){
-		
+	public SSDModel getSSD(String filePath,String classfication){
 		if(classfication.equals("民事一审")){
 			return CivilFirstLocator.getInstance().getSSD(filePath);
 		}

@@ -9,11 +9,13 @@ public class SSDModel {
     private String name;
     private String value;
     private ArrayList<String> details;
+    private ArrayList<SSModel> ssModels;
 
     public SSDModel(String name, String value) {
         this.name = name;
         this.value = value;
         details = new ArrayList<String>();
+        ssModels = new ArrayList<SSModel>();
     }
 
     public String getName() {
@@ -36,7 +38,16 @@ public class SSDModel {
         this.value = value;
     }
 
+    public ArrayList<SSModel> getSsModels() {
+        return ssModels;
+    }
+
     public void setDetails(ArrayList<String> details) {
         this.details = details;
+        for (String s: details) {
+            SSModel model = new SSModel(s);
+            ssModels.add(model);
+        }
+
     }
 }
