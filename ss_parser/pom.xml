@@ -19,6 +19,11 @@
             <artifactId>jxl</artifactId>
             <version>2.6.12</version>
         </dependency>
+        <dependency>
+            <groupId>org.ansj</groupId>
+            <artifactId>ansj_seg</artifactId>
+            <version>5.1.0</version>
+        </dependency>
     </dependencies>
 
 
