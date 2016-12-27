@@ -1,14 +1,7 @@
 package parser;
 
-import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
 import model.SSDModel;
-import org.xml.sax.SAXException;
-import util.XMLUtil;
 
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.xpath.XPathExpressionException;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
 /**
