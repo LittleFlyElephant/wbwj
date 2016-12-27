@@ -27,6 +27,7 @@ public class TestUtil {
         //增加提取关键词的类
         SSParser parserWhere = new SSWhereParser();
         SSParser parserWhat = new SSWhatParser();
+        SSParser parserHowMuch = new SSHMParser();
         for (SSDModel ssd: ssdModels) {
             for (SSModel ss: ssd.getSsModels()) {
                 //设置关键词
