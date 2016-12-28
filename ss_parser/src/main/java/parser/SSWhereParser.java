@@ -14,11 +14,13 @@ import java.util.List;
  */
 public class SSWhereParser extends SSParser {
 
+    //表示地点前的介词
     private ArrayList<String> preps = new ArrayList<String>(Arrays.asList("在","于","至","往","从","沿"));
 
     @Override
     protected String extractKey(String ss) {
         String ans = "";
+        //使用ansj进行分析
         Result result = NlpAnalysis.parse(ss);
         List<Term> originTerms = result.getTerms();
         int p = 0;
@@ -26,11 +28,12 @@ public class SSWhereParser extends SSParser {
             Term term = originTerms.get(p);
 //            System.out.println(term);
             p ++;
+            //找到对应介词,表示之后的词可能是地点
             if (term.getNatureStr().equals("p") && preps.contains(term.getName())){//介词
                 String place = "";
                 while (p < originTerms.size()){
                     Term innerTerm = originTerms.get(p);
-                    //名词
+                    //连接名词,代词等,用于组成一个地点
                     if (innerTerm.getNatureStr().startsWith("n") ||
                             innerTerm.getNatureStr().startsWith("r") ||
                             innerTerm.getNatureStr().equals("s")){
@@ -40,7 +43,7 @@ public class SSWhereParser extends SSParser {
                     }
                     break;
                 }
-                //筛选
+                //去除非地点词,感觉这里需要改进
                 if (place.length() > 0 &&
                         !place.startsWith("本院") &&
                         !place.startsWith("被告")&&
@@ -57,6 +60,7 @@ public class SSWhereParser extends SSParser {
     public void setKeyInSS(SSModel ssModel) {
         String ss = ssModel.getValue();
         String res = extractKey(ss);
+        //去掉空串
         if (!res.equals("")) ssModel.setWhere(res);
     }
 
