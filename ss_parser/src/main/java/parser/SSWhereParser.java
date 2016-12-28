@@ -11,6 +11,15 @@ import java.util.List;
 
 /**
  * Created by raychen on 2016/12/27.
+ * 本周主要工作有：
+    1、加入对事实关键词提取的基本方法
+    2、加入对xml中关键词的写入
+    3、加入对解析好的事实进行where关键词的提取，并测试分析
+        其中主要需要考虑:
+        1)地点前的介词
+        2)地点的词结构
+        3)非地点词的去除
+        效果上感觉nlp还是好一点,不过哈工大语言云的还没有试过,需要进一步尝试。
  */
 public class SSWhereParser extends SSParser {
 
