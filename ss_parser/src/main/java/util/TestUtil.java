@@ -28,11 +28,14 @@ public class TestUtil {
         SSParser parserWhere = new SSWhereParser();
         SSParser parserWhat = new SSWhatParser();
         SSParser parserHowMuch = new SSHMParser();
+        SSParser parserWhen = new SSWhenParser();
         for (SSDModel ssd: ssdModels) {
             for (SSModel ss: ssd.getSsModels()) {
                 //设置关键词
                 parserWhere.setKeyInSS(ss);
-//                parserWhat.setKeyInSS(ss);
+                parserWhat.setKeyInSS(ss);
+                parserHowMuch.setKeyInSS(ss);
+                parserWhen.setKeyInSS(ss);
             }
         }
     }
