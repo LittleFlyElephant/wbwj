@@ -6,7 +6,13 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Created by C91CBQ on 2016/12/27.
+ *
+ * @author: Qi Bao
+ * @Date: 12/27/2016
+ * @Description: How Much 即对文书事实中出现的金额进行分析，经过文书的阅读和整理，发现金额表述较为规范，基本都以"数字+元"的方式出现，出现过美元单位。因此采用正则表达式匹配的方式对金额进行提取，考虑到可能少量的外币，对"元"进行单字模糊匹配，结果会附带单位。
+ * @Test Case: "2016年12月27日，111美元，222元，333英镑，444日元，555加币，666欧元"
+ * @Test Outcome: "111美元；222元；333英镑；444日元；666欧元；"
+ *
  */
 public class SSHMParser extends SSParser{
 
