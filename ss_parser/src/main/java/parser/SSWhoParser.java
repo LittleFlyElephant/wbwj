@@ -1,4 +1,4 @@
-package parser;
+﻿package parser;
 
 import model.SSModel;
 import org.ansj.domain.Result;
@@ -9,6 +9,8 @@ import java.util.Iterator;
 
 /**
  * Created by 管通 on 2016/12/27.
+ * 通过ansj的词性标注提取出文本中的人名
+ * 经过比较发现ansj提供的几种方法中NlpAnalysis识别人名的效果最好
  */
 public class SSWhoParser extends SSParser{
     protected String extractKey(String ss){
