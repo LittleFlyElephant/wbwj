@@ -29,6 +29,7 @@ public class TestUtil {
         SSParser parserWhat = new SSWhatParser();
         SSParser parserHowMuch = new SSHMParser();
         SSParser parserWhen = new SSWhenParser();
+        SSParser parserWho = new SSWhoParser();
         for (SSDModel ssd: ssdModels) {
             for (SSModel ss: ssd.getSsModels()) {
                 //设置关键词
@@ -36,6 +37,7 @@ public class TestUtil {
                 parserWhat.setKeyInSS(ss);
                 parserHowMuch.setKeyInSS(ss);
                 parserWhen.setKeyInSS(ss);
+                parserWho.setKeyInSS(ss);
             }
         }
     }
