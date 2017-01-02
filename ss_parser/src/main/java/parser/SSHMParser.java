@@ -19,7 +19,7 @@ public class SSHMParser extends SSParser{
     @Override
     protected String extractKey(String ss) {
         StringBuilder result = new StringBuilder();
-        Pattern pattern = Pattern.compile("\\d+([\\u4e00-\\u9fa5]{0,1}元)|\\d+英镑");
+        Pattern pattern = Pattern.compile("\\d+([\\u4e00-\\u9fa5]{0,1}元)|\\d+英镑|\\d+克");
         Matcher matcher = pattern.matcher(ss);
         while(matcher.find()) {
             System.out.println(matcher.group());
@@ -36,7 +36,7 @@ public class SSHMParser extends SSParser{
 
     public static void main(String[] args) {
         SSHMParser parser = new SSHMParser();
-        String test = "2016年12月27日，111美元，222元，333英镑，444日元，555加币，666欧元";
+        String test = "2016年12月27日，111美元，222元，333英镑，444日元，555加币，666欧元，2.35克，6克";
         System.out.println(parser.extractKey(test));
     }
 
