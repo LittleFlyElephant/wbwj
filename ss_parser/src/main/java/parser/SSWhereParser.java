@@ -69,8 +69,7 @@ public class SSWhereParser extends SSParser {
     public void setKeyInSS(SSModel ssModel) {
         String ss = ssModel.getValue();
         String res = extractKey(ss);
-        //去掉空串
-        if (!res.equals("")) ssModel.setWhere(res);
+        ssModel.setWhere(res);
     }
 
     public static void main(String[] args) {
