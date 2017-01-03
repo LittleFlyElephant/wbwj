@@ -1,4 +1,4 @@
-﻿package parser;
+package parser;
 
 import model.SSModel;
 import org.ansj.domain.Result;
