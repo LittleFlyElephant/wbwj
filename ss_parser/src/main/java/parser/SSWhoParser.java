@@ -1,28 +1,44 @@
 package parser;
 
+import com.hankcs.hanlp.seg.NShort.NShortSegment;
+import com.hankcs.hanlp.seg.Segment;
 import model.SSModel;
 import org.ansj.domain.Result;
-import org.ansj.domain.Term;
-import org.ansj.splitWord.analysis.*;
+import org.ansj.splitWord.analysis.NlpAnalysis;
 
 import java.util.Iterator;
+import java.util.List;
+
+//import com.hankcs.hanlp.seg.common.Term;
+//import org.ansj.domain.Term;
 
 /**
  * Created by 管通 on 2016/12/27.
  * 通过ansj的词性标注提取出文本中的人名
  * 经过比较发现ansj提供的几种方法中NlpAnalysis识别人名的效果最好
+ * hanlp提供的N最短路径分词器识别机构名的效果最好
  */
 public class SSWhoParser extends SSParser{
     protected String extractKey(String ss){
+        Segment segment = new NShortSegment().enableOrganizationRecognize(true).enablePlaceRecognize(true);
+        List<com.hankcs.hanlp.seg.common.Term>termList = segment.seg(ss);
         Result parserResult = NlpAnalysis.parse(ss);
-        Iterator<Term> it = parserResult.iterator();
+        Iterator<org.ansj.domain.Term> it = parserResult.iterator();
+        Iterator<com.hankcs.hanlp.seg.common.Term> itr = termList.iterator();
         StringBuilder builder = new StringBuilder();
         while(it.hasNext()){
-            Term t = it.next();
+            org.ansj.domain.Term t = it.next();
             String nature = t.getNatureStr();
             if(nature.startsWith("nr")){
                 builder.append(t.getRealName()+";");
             }
+        }
+        while(itr.hasNext()){
+            com.hankcs.hanlp.seg.common.Term t = itr.next();
+            String nature = t.nature.toString();
+            if(nature.startsWith("nt")){
+               builder.append(t.word.toString()+";");
+           }
         }
         return builder.toString();
     }
@@ -33,11 +49,29 @@ public class SSWhoParser extends SSParser{
 
     public static void main(String[] args){
         SSWhoParser ssWhoParser = new SSWhoParser();
-        String words = "经审理查明：2013年9月2日，被告陈玉坤向原告借款200000元，约定还款期限为2013年10月2日止。当日，被告向原告出具借条，其内容为“借条。兹因经营资金周转需要，向吴选城，借款人民币贰拾万元整（小写：200000元）。本借款的月利率为2％，借款人应按月支付借款利息。借款期限为2013年9月2日起至2013年10月2日止。借款人未按期归还本金利息的，则应承担借款本金30％逾期还款违约金。如借款人未按期交纳利息的，或出借人认为有必要提前收回借款的，借款人应按出借人的要求提前归还本次借款的本金及利息，并承担出借人催讨本次借款所需的费用（含律师费，保全费，诉讼费，鉴定评估费用，公告费用、差旅费用）。该笔借款由简作林、（空白）提供担保，并承担连带保证责任，保证范围为借款本金、利息及出借人追款所需的全部费用，保证期限为两年。如借款人不能偿还本金利息的，出借人有权拍卖借款人和保证人名下的汽车、房子等一切财产，用于偿还本次借款、利息及其他所需费用。各方一致同意由永定县人民法院管辖本借款合同。管理本合同争议。借款人：陈玉坤。保证人：简作林。2013年9月2日。借款现金200000元，本人于2012年9月2日已收到。借款人：陈玉坤，2013年9月2日”。现被告仍欠原告200000元。";
-        System.out.println(ToAnalysis.parse(words));
+        String words = "被告广德县人力资源和社会保障局于2010年1月15日对原广德县萤石矿劳动服务公司职工晏霞作出基本养老金核定，核定其月养老金待遇为434元。经审理查明，2013年至2014年11月期间被告罗奋新陆续向原告李秀梅借款。2014年11月7日经双方结算，被告罗奋新尚欠原告李秀梅借款本金50000元及利息12500元（按月利率2％计算），本息合计62500元。同日，被告罗奋新重新出具一张借条给原告李秀梅，该借条载明“兹向李秀梅借到人民币陆万贰仟伍佰元整，小写￥62500元。用于短期流动资金使用，借款期限6个月，如不按期归还，本人同意指定到将乐县人民法院诉讼受理该笔还款，由此产生的一切费用由罗奋新全部承担”。被告宋永昆以担保人身份在借条上签字，为被告罗奋新提供担保。借款于2015年5月6日到期后，被告罗奋新未还借款，至今尚欠原告李秀梅62500元，被告宋永昆也未履行担保义务。上述事实有原告李秀梅提供的身份证、借条等证据以及原告李秀梅及被告罗奋新在法庭上的陈述相互印证，被告宋永昆经依法传唤未到庭参加诉讼，视为自愿放弃举证、质证权利，应承担相应后果，本院对原告李秀梅提供的上述证据依法予以采信。";
+    /*  System.out.println(ToAnalysis.parse(words));
         System.out.println(NlpAnalysis.parse(words));
         System.out.println(DicAnalysis.parse(words));
-        System.out.println(IndexAnalysis.parse(words));
+        System.out.println(IndexAnalysis.parse(words));*/
         System.out.println(ssWhoParser.extractKey(words));
+        /*Segment segment = HanLP.newSegment().enableOrganizationRecognize(true).enablePlaceRecognize(true);
+        List<Term> termList = segment.seg(words);
+        System.out.println(termList);
+        termList = NLPTokenizer.segment(words);
+        System.out.println(termList);
+        termList = IndexTokenizer.segment(words);
+        System.out.println(termList);
+        segment = new NShortSegment().enableOrganizationRecognize(true).enablePlaceRecognize(true);
+        termList = segment.seg(words);
+        System.out.println(termList);
+        segment = new ViterbiSegment().enableOrganizationRecognize(true).enablePlaceRecognize(true);
+        termList = segment.seg(words);
+        System.out.println(termList);
+        segment = new DijkstraSegment().enableOrganizationRecognize(true).enablePlaceRecognize(true);
+        termList = segment.seg(words);
+        System.out.println(termList);*/
+
+
     }
 }
