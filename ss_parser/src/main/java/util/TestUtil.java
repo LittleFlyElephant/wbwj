@@ -55,6 +55,7 @@ public class TestUtil {
         //读取子文件
         for (String filename: filenames) {
             if (filename.charAt(0) == '.') continue;
+            System.out.println("parse "+XMLUtil.readPath+filesPath+"/"+filename);
             //获得事实段
             ArrayList<SSDModel> res = locator.getSSDs(filesPath, XMLUtil.readPath+filesPath+"/"+filename);
             if (res.size() == 0) continue;
