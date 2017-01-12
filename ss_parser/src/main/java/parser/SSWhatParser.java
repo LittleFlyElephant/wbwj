@@ -31,7 +31,7 @@ public class SSWhatParser extends SSParser{
         String result = "";
         CoNLLSentence sentence = HanLP.parseDependency(ss);
 //        System.out.println(sentence);
-        // 可以方便地遍历它
+        // 遍历语义依存关系,如果发现带宾语的关系则提取宾语并完善该宾语（利用定中关系来完善）
         Map<String,String> describeLink = new HashMap<String, String>();
         for (CoNLLWord word : sentence)
         {
@@ -67,7 +67,7 @@ public class SSWhatParser extends SSParser{
 //            }
 //        }
 //        return builder.toString();
-        //用只提取书名的方式尝试一下
+        //用只提取书名的方式先试一下
         System.out.println("parse ss: "+ss);
         String result = "";
         int start  = 0;
@@ -85,14 +85,12 @@ public class SSWhatParser extends SSParser{
                 results.add(ss.substring(start,end));
             }
         }
-        if(result.equals("")){
-            if(ss.contains("(")||ss.contains("（")){
-                //带括号好像有问题，待解决
-                //TODO
-                return result;
-            }
-            result = hanlpParse(ss);
+        if(ss.contains("(")||ss.contains("（")){
+            //带括号的用hanlp解析会出现卡住的问题，待解决，这里直接返回
+            //TODO
+            return result;
         }
+        result = hanlpParse(ss);
         return result;
 
     }
