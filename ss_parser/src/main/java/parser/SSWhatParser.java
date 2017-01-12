@@ -11,10 +11,7 @@ import org.ansj.splitWord.analysis.BaseAnalysis;
 import org.ansj.splitWord.analysis.NlpAnalysis;
 import org.ansj.splitWord.analysis.ToAnalysis;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by DengrongGuan on 2016/12/26.
@@ -30,6 +27,7 @@ public class SSWhatParser extends SSParser{
     }
     private String hanlpParse(String ss){
 
+        Set<String> results = new HashSet<String>();
         String result = "";
         CoNLLSentence sentence = HanLP.parseDependency(ss);
 //        System.out.println(sentence);
@@ -41,7 +39,12 @@ public class SSWhatParser extends SSParser{
                 describeLink.put(word.HEAD.LEMMA,word.LEMMA);
             }
             if(word.DEPREL.equals("动宾关系")){
-                result += findDescriptions(describeLink,word.LEMMA)+";";
+                String tmp = findDescriptions(describeLink,word.LEMMA);
+                if(results.contains(tmp)){
+                    continue;
+                }
+                results.add(tmp);
+                result += tmp+";";
             }
 //            System.out.printf("%s --(%s)--> %s\n", word.LEMMA, word.DEPREL, word.HEAD.LEMMA);
         }
@@ -69,12 +72,17 @@ public class SSWhatParser extends SSParser{
         String result = "";
         int start  = 0;
         int end = 0;
+        Set<String> results = new HashSet<String>();
         for(int i = 0;i<ss.length();i++){
             if(ss.charAt(i) == '《'){
                 start = i+1;
             }else if(ss.charAt(i) == '》'){
                 end = i;
+                if(results.contains(ss.substring(start,end))){
+                    continue;
+                }
                 result += ss.substring(start,end)+";";
+                results.add(ss.substring(start,end));
             }
         }
         if(result.equals("")){
