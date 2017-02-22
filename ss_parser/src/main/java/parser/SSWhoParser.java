@@ -1,13 +1,12 @@
 package parser;
 
-import com.hankcs.hanlp.seg.NShort.NShortSegment;
-import com.hankcs.hanlp.seg.Segment;
-import model.SSModel;
-import org.ansj.domain.Result;
-import org.ansj.splitWord.analysis.NlpAnalysis;
-
 import java.util.Iterator;
 import java.util.List;
+
+import com.hankcs.hanlp.seg.Segment;
+import com.hankcs.hanlp.seg.NShort.NShortSegment;
+
+import model.SSModel;
 
 //import com.hankcs.hanlp.seg.common.Term;
 //import org.ansj.domain.Term;
@@ -20,26 +19,30 @@ import java.util.List;
  */
 public class SSWhoParser extends SSParser{
     protected String extractKey(String ss){
-        Segment segment = new NShortSegment().enableOrganizationRecognize(true).enablePlaceRecognize(true);
-        List<com.hankcs.hanlp.seg.common.Term>termList = segment.seg(ss);
-        Result parserResult = NlpAnalysis.parse(ss);
-        Iterator<org.ansj.domain.Term> it = parserResult.iterator();
-        Iterator<com.hankcs.hanlp.seg.common.Term> itr = termList.iterator();
+        Segment segment = new NShortSegment().enableOrganizationRecognize(true).enablePlaceRecognize(true).enableNameRecognize(true);
         StringBuilder builder = new StringBuilder();
-        while(it.hasNext()){
-            org.ansj.domain.Term t = it.next();
-            String nature = t.getNatureStr();
-            if(nature.startsWith("nr")){
-                builder.append(t.getRealName()+";");
-            }
-        }
+        
+        //hanlp
+        List<com.hankcs.hanlp.seg.common.Term> termList = segment.seg(ss);
+        Iterator<com.hankcs.hanlp.seg.common.Term> itr = termList.iterator();
         while(itr.hasNext()){
             com.hankcs.hanlp.seg.common.Term t = itr.next();
             String nature = t.nature.toString();
-            if(nature.startsWith("nt")){
+            if((nature.startsWith("nt") || nature.startsWith("ns") || nature.startsWith("nr")) && !builder.toString().contains(t.word.toString())){
                builder.append(t.word.toString()+";");
            }
         }
+        
+//        Result parserResult = NlpAnalysis.parse(ss);
+//        Iterator<org.ansj.domain.Term> it = parserResult.iterator();
+//        while(it.hasNext()){
+//            org.ansj.domain.Term t = it.next();
+//            String nature = t.getNatureStr();
+//            if(nature.startsWith("nr") && !builder.toString().contains(t.getRealName())){
+//                builder.append(t.getRealName()+";");
+//            }
+//        }
+
         return builder.toString();
     }
     public void setKeyInSS(SSModel ssModel){
